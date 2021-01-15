@@ -4,8 +4,8 @@ const { app, Tray, BrowserWindow, ipcMain, dialog } = require("electron");
 // Don't show the app in the doc
 app.dock.hide()
 
-process.env.AWS_ACCESS_KEY_ID = "AWS_ACCESS_KEY_ID";
-process.env.AWS_SECRET_ACCESS_KEY = "AWS_SECRET_ACCESS_KEY";
+process.env.AWS_ACCESS_KEY_ID = "AKIAR3EPFWQ7CZ6TAJNT";
+process.env.AWS_SECRET_ACCESS_KEY = "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";
 
 let win = null;
 global.tray = null;
