@@ -12,6 +12,7 @@
     "electron": "^11.1.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.828.0"
+    "aws-sdk": "^2.828.0",
+    "dotenv": "^8.2.0"
   }
 }
