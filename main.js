@@ -1,8 +1,11 @@
 const path = require("path");
-const { app, Tray, BrowserWindow, ipcMain } = require("electron");
+const { app, Tray, BrowserWindow, ipcMain, dialog } = require("electron");
 
 // Don't show the app in the doc
 app.dock.hide()
+
+process.env.AWS_ACCESS_KEY_ID = "AKIAR3EPFWQ7CZ6TAJNT";
+process.env.AWS_SECRET_ACCESS_KEY = "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";
 
 let win = null;
 global.tray = null;
@@ -20,8 +23,10 @@ app.whenReady().then(() => {
     height: 600,
     show: false,
     webPreferences: {
-      enableRemoteModule: true,
-      nodeIntegration: true,
+      enableRemoteModule: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, "/preload.js") // use a preload script
     },
   });
 
@@ -51,3 +56,21 @@ const stopRecord = () => {
   global.tray.setImage(__dirname + "/img/icon-green.png");
   win.webContents.send('stop', 'stop!')
 };
+
+ipcMain.handle('showSaveDialog', async (event, someArgument) => {
+  const file = await dialog
+  .showSaveDialog({
+    title: "Select the File Path to save",
+    buttonLabel: "Save",
+    defaultPath: `${Date.now()}.webm`,
+    // Restricting the user to only Text Files.
+    filters: [
+      {
+        name: "Video Files",
+        extensions: ["webm"],
+      },
+    ],
+    properties: [],
+  });
+  return file;
+})
